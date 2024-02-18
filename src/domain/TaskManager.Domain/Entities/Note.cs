@@ -17,6 +17,7 @@
         public Guid Id
         {
             get { return _id; }
+            init => _id = value;
         }
 
         public string Record
