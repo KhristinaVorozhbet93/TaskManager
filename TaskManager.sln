@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.WebAPI", "src\presentation\TaskManager.WebAPI\TaskManager.WebAPI.csproj", "{8E6D9B73-507B-430B-AB96-FAAB1ADD9A17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManager.WebAPI", "src\presentation\TaskManager.WebAPI\TaskManager.WebAPI.csproj", "{8E6D9B73-507B-430B-AB96-FAAB1ADD9A17}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pesentation", "pesentation", "{E2189F97-2788-4174-B2A2-584D09DBA08F}"
 EndProject
@@ -13,9 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "domain", "domain", "{A3A49EB8-A11B-4C2A-9154-03E27EF6CE55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.DataEntityFramework", "src\infrastructure\TaskManager.DataEntityFramework\TaskManager.DataEntityFramework.csproj", "{32F2017A-718D-449B-9372-77CA985D48A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManager.DataEntityFramework", "src\infrastructure\TaskManager.DataEntityFramework\TaskManager.DataEntityFramework.csproj", "{32F2017A-718D-449B-9372-77CA985D48A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.Domain", "src\domain\TaskManager.Domain\TaskManager.Domain.csproj", "{94083FF7-2F66-47F1-A25C-32767DBCB9DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManager.Domain", "src\domain\TaskManager.Domain\TaskManager.Domain.csproj", "{94083FF7-2F66-47F1-A25C-32767DBCB9DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
