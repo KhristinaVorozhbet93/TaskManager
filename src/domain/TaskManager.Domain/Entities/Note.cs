@@ -1,6 +1,6 @@
 ﻿namespace TaskManager.Domain.Entities
 {
-    public class Note
+    public class Note : IEntity
     {
         private Guid _id;
         private string _record;
