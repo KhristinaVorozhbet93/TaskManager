@@ -33,6 +33,7 @@ namespace TaskManager.DataEntityFramework
         public virtual Task Delete(TEntity entity, CancellationToken cancellationToken)
         {
             _entities.Remove(entity);
+            _dbContext.SaveChangesAsync();
             return Task.CompletedTask;
         }
     }
