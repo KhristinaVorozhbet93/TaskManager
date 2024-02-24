@@ -16,7 +16,7 @@ namespace TaskManager.DataEntityFramework.Repositories
         {
             return await Entities.SingleAsync(it => it.Id == entity.Id, cancellationToken);
         }
-        public virtual async Task<List<TEntity>> GetAll(TEntity entity, CancellationToken cancellationToken)
+        public virtual async Task<List<TEntity>> GetAll(CancellationToken cancellationToken)
         {
             return await Entities.ToListAsync(cancellationToken);
         }
