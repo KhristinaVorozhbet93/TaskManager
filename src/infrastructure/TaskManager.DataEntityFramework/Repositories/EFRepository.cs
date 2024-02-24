@@ -7,22 +7,22 @@ namespace TaskManager.DataEntityFramework.Repositories
     public class EFRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
     {
         private readonly AppDbContext _dbContext;
-        protected DbSet<TEntity> _entities => _dbContext.Set<TEntity>();
+        protected DbSet<TEntity> Entities => _dbContext.Set<TEntity>();
         public EFRepository(AppDbContext appDbContext)
         {
             _dbContext = appDbContext ?? throw new ArgumentNullException(nameof(appDbContext));
         }
         public virtual async Task<TEntity> GetById(TEntity entity, CancellationToken cancellationToken)
         {
-            return await _entities.FirstAsync(it => it.Id == entity.Id, cancellationToken);
+            return await Entities.SingleAsync(it => it.Id == entity.Id, cancellationToken);
         }
         public virtual async Task<List<TEntity>> GetAll(TEntity entity, CancellationToken cancellationToken)
         {
-            return await _entities.ToListAsync(cancellationToken);
+            return await Entities.ToListAsync(cancellationToken);
         }
         public virtual async Task Add(TEntity entity, CancellationToken cancellationToken)
         {
-            await _entities.AddAsync(entity, cancellationToken);
+            await Entities.AddAsync(entity, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
         public virtual async Task Update(TEntity entity, CancellationToken cancellationToken)
@@ -32,7 +32,7 @@ namespace TaskManager.DataEntityFramework.Repositories
         }
         public virtual Task Delete(TEntity entity, CancellationToken cancellationToken)
         {
-            _entities.Remove(entity);
+            Entities.Remove(entity);
             _dbContext.SaveChangesAsync();
             return Task.CompletedTask;
         }

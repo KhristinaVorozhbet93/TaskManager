@@ -20,12 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\..\domain\TaskManager.Domain\TaskManager.Domain.csproj" />
+    <ProjectReference Include="..\..\infrastructure\TaskManager.DataEntityFramework\TaskManager.DataEntityFramework.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\domain\TaskManager.Domain\TaskManager.Domain.csproj" />
-    <ProjectReference Include="..\..\infrastructure\TaskManager.DataEntityFramework\TaskManager.DataEntityFramework.csproj" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

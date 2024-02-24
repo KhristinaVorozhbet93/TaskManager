@@ -21,7 +21,7 @@ options.UseSqlServer
 $"User Id = {msSqlConfig.UserName}; Password = {msSqlConfig.Password}; TrustServerCertificate=True"));
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
-builder.Services.AddScoped<INoteRepository, NoteRepository>(); 
+builder.Services.AddScoped<INoteRepository, NoteRepositoryEF>(); 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
