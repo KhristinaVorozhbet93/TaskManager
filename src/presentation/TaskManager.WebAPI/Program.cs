@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TaskManager.DataEntityFramework;
+using TaskManager.DataEntityFramework.Repositories;
+using TaskManager.Domain.Entities;
 using TaskManager.Domain.Interfaces;
 using TaskManager.WebAPI;
 var builder = WebApplication.CreateBuilder(args);
@@ -33,7 +35,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.MapPost("/add_product", async(Note note, AppDbContext db)=> {
+    await db.Notes.AddAsync(note);
+    await db.SaveChangesAsync();
+});
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

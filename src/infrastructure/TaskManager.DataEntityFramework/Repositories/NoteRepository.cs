@@ -2,7 +2,7 @@
 using TaskManager.Domain.Entities;
 using TaskManager.Domain.Interfaces;
 
-namespace TaskManager.DataEntityFramework
+namespace TaskManager.DataEntityFramework.Repositories
 {
     public class NoteRepository : EFRepository<Note>, INoteRepository
     {

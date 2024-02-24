@@ -20,4 +20,12 @@
     <ProjectReference Include="..\..\domain\TaskManager.Domain\TaskManager.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="D:\TaskManager\src\infrastructure\TaskManager.DataEntityFramework\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="D:\TaskManager\src\infrastructure\TaskManager.DataEntityFramework\.editorconfig" />
+  </ItemGroup>
+
 </Project>
