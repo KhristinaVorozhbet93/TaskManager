@@ -9,7 +9,6 @@ namespace TaskManager.DataEntityFramework.Repositories
     public class NoteRepositoryEF : EFRepository<Note>, INoteRepository
     {
         private AppDbContext _dbContext;
-
         public NoteRepositoryEF(AppDbContext _appDbContext)
             : base(_appDbContext) { }
 

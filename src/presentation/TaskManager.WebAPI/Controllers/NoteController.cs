@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaskManager.Domain.Entities;
-using TaskManager.Domain.Interfaces;
+using TaskManager.Domain.Services;
 
 namespace TaskManager.WebAPI.Controllers
 {
@@ -8,12 +8,11 @@ namespace TaskManager.WebAPI.Controllers
     [Route("note")]
     public class NoteController : ControllerBase
     {
-        private readonly INoteRepository _noteRepository;
+        private readonly NoteService _noteService;
 
-        public NoteController(INoteRepository noteRepository)
+        public NoteController(NoteService noteService)
         {
-            ArgumentException.ThrowIfNullOrEmpty(nameof(noteRepository));
-            _noteRepository = noteRepository;
+            _noteService = noteService ?? throw new ArgumentNullException(nameof(noteService));
         }
 
         [HttpGet("/get_note")]
@@ -21,33 +20,53 @@ namespace TaskManager.WebAPI.Controllers
         {
             try
             {
-                var result = await _noteRepository.GetById(note, cancellationToken);
-                return Ok(result);
+                var existedNote = await _noteService.GetNote(note, cancellationToken);
+                return Ok(existedNote);
             }
             catch (InvalidOperationException)
             {
                 return NotFound();
             }
+            catch (ArgumentNullException)
+            {
+                return BadRequest(); 
+            }
         }
 
         [HttpGet("/get_notes")]
-        public async Task<List<Note>> GetNotes(CancellationToken cancellationToken)
-        {
-            return await _noteRepository.GetAll(cancellationToken);
-        }
-
-        [HttpPost("/add_note")]
-        public async Task AddNote(Note note, CancellationToken cancellationToken)
-        {
-            await _noteRepository.Add(note, cancellationToken);
-        }
-
-        [HttpPost("/update_note")]
-        public async Task<ActionResult> UpdateNote(Note note, CancellationToken cancellationToken)
+        public async Task<ActionResult<List<Note>>> GetNotes(CancellationToken cancellationToken)
         {
             try
             {
-                await _noteRepository.Update(note, cancellationToken);
+                var existedNotes = await _noteService.GetAllNotes(cancellationToken);
+                return Ok(existedNotes);
+            }
+            catch (ArgumentNullException)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPost("/add_note")]
+        public async Task<ActionResult> AddNote(Note note, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await _noteService.AddNote(note, cancellationToken);
+                return Ok();
+            }
+            catch (ArgumentNullException)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("/update_note")]
+        public async Task<ActionResult> UpdateNote(Note newNote, CancellationToken cancellationToken)
+        {
+            try
+            {
+                await _noteService.UpdateNote(newNote, cancellationToken);
                 return Ok();
             }
             catch (ArgumentNullException)
@@ -55,10 +74,19 @@ namespace TaskManager.WebAPI.Controllers
                 return NotFound();
             }
         }
+
         [HttpPost("/delete_note")]
-        public async Task DeleteNote(Note note, CancellationToken cancellationToken)
+        public async Task<ActionResult> DeleteNote(Note note, CancellationToken cancellationToken)
         {
-            await _noteRepository.Delete(note, cancellationToken);
+            try
+            {
+                await _noteService.DeleteNote(note, cancellationToken);
+                return Ok();
+            }
+            catch (ArgumentNullException)
+            {
+                return NotFound();
+            }
         }
     }
 }
