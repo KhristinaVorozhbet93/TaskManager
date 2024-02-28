@@ -12,9 +12,9 @@ namespace TaskManager.DataEntityFramework.Repositories
         {
             _dbContext = appDbContext ?? throw new ArgumentNullException(nameof(appDbContext));
         }
-        public virtual async Task<TEntity> GetById(TEntity entity, CancellationToken cancellationToken)
+        public virtual async Task<TEntity> GetById(Guid id, CancellationToken cancellationToken)
         {
-            return await Entities.SingleAsync(it => it.Id == entity.Id, cancellationToken);
+            return await Entities.SingleAsync(it => it.Id == id, cancellationToken);
         }
         public virtual async Task<List<TEntity>> GetAll(CancellationToken cancellationToken)
         {

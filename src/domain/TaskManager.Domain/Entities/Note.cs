@@ -5,12 +5,13 @@
         private Guid _id;
         private string _record;
 
-        public Note(string record)
+        public Note(Guid id, string record)
         {
             if (string.IsNullOrWhiteSpace(record))
             {
                 throw new ArgumentException($"Value can not be null or whitespace{nameof(record)}");
             }
+            _id = id; 
             _record = record;
         }
 

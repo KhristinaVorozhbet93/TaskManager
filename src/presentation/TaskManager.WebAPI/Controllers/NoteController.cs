@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TaskManager.Domain.Entities;
 using TaskManager.Domain.Services;
+using TaskManager.WebAPI.HttpModels.Requests;
+using TaskManager.WebAPI.HttpModels.Responses;
 
 namespace TaskManager.WebAPI.Controllers
 {
@@ -16,12 +17,13 @@ namespace TaskManager.WebAPI.Controllers
         }
 
         [HttpGet("/get_note")]
-        public async Task<ActionResult<Note>> GetNote(Note note, CancellationToken cancellationToken)
+        public async Task<ActionResult<NoteResponse>> GetNote
+            (Guid id, CancellationToken cancellationToken)
         {
             try
             {
-                var existedNote = await _noteService.GetNote(note, cancellationToken);
-                return Ok(existedNote);
+                var existedNote = await _noteService.GetNote(id, cancellationToken);
+                return Ok(new NoteResponse(existedNote.Id, existedNote.Record));
             }
             catch (InvalidOperationException)
             {
@@ -34,12 +36,18 @@ namespace TaskManager.WebAPI.Controllers
         }
 
         [HttpGet("/get_notes")]
-        public async Task<ActionResult<List<Note>>> GetNotes(CancellationToken cancellationToken)
+        public async Task<ActionResult<List<NoteResponse>>> GetNotes(CancellationToken cancellationToken)
         {
             try
             {
                 var existedNotes = await _noteService.GetAllNotes(cancellationToken);
-                return Ok(existedNotes);
+                List<NoteResponse> notesResponse = new();
+                foreach (var note in existedNotes)
+                {
+                    notesResponse.Add(new NoteResponse(note.Id, note.Record));
+                }
+
+                return Ok(notesResponse);
             }
             catch (ArgumentNullException)
             {
@@ -48,11 +56,11 @@ namespace TaskManager.WebAPI.Controllers
         }
 
         [HttpPost("/add_note")]
-        public async Task<ActionResult> AddNote(Note note, CancellationToken cancellationToken)
+        public async Task<ActionResult> AddNote(NoteRequest request, CancellationToken cancellationToken)
         {
             try
             {
-                await _noteService.AddNote(note, cancellationToken);
+                await _noteService.AddNote(request.Record, cancellationToken);
                 return Ok();
             }
             catch (ArgumentNullException)
@@ -62,11 +70,12 @@ namespace TaskManager.WebAPI.Controllers
         }
 
         [HttpPost("/update_note")]
-        public async Task<ActionResult> UpdateNote(Note newNote, CancellationToken cancellationToken)
+        public async Task<ActionResult> UpdateNote
+            (UpdateNoteRequest request, CancellationToken cancellationToken)
         {
             try
             {
-                await _noteService.UpdateNote(newNote, cancellationToken);
+                await _noteService.UpdateNote(request.Id, request.NewRecord, cancellationToken);
                 return Ok();
             }
             catch (ArgumentNullException)
@@ -76,11 +85,11 @@ namespace TaskManager.WebAPI.Controllers
         }
 
         [HttpPost("/delete_note")]
-        public async Task<ActionResult> DeleteNote(Note note, CancellationToken cancellationToken)
+        public async Task<ActionResult> DeleteNote(Guid id, CancellationToken cancellationToken)
         {
             try
             {
-                await _noteService.DeleteNote(note, cancellationToken);
+                await _noteService.DeleteNote(id, cancellationToken);
                 return Ok();
             }
             catch (ArgumentNullException)

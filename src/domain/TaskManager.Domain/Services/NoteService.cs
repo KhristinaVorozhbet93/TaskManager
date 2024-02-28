@@ -12,10 +12,9 @@ namespace TaskManager.Domain.Services
             _noteRepository = noteRepository ?? throw new ArgumentNullException(nameof(noteRepository));
         }
 
-        public async Task<Note> GetNote(Note note, CancellationToken cancellationToken)
+        public async Task<Note> GetNote(Guid id, CancellationToken cancellationToken)
         {
-            ArgumentException.ThrowIfNullOrEmpty(nameof(note));
-            return await _noteRepository.GetById(note, cancellationToken);
+            return await _noteRepository.GetById(id, cancellationToken);
         }
         public async Task<List<Note>> GetAllNotes(CancellationToken cancellationToken)
         {
@@ -26,19 +25,34 @@ namespace TaskManager.Domain.Services
             }
             return existedNotes; 
         }
-        public async Task AddNote(Note note, CancellationToken cancellationToken)
+        public async Task AddNote(string record, CancellationToken cancellationToken)
         {
-            ArgumentException.ThrowIfNullOrEmpty(nameof(note));
+            if (string.IsNullOrWhiteSpace(record))
+            {
+                throw new ArgumentException(nameof(record));
+            }
+
+            var note = new Note(Guid.NewGuid(), record);
             await _noteRepository.Add(note, cancellationToken);
         }
-        public async Task UpdateNote(Note note, CancellationToken cancellationToken)
+        public async Task UpdateNote(Guid id, string newRecord, CancellationToken cancellationToken)
         {
-            ArgumentException.ThrowIfNullOrEmpty(nameof(note));
+            if (string.IsNullOrWhiteSpace(nameof(newRecord)))
+            {
+                throw new ArgumentException(nameof(newRecord));
+            }
+            var note = await _noteRepository.FindNoteById(id, cancellationToken);
+
+            if (note is null) 
+            {
+                throw new ArgumentException(nameof(note));
+            }
+            note.Record = newRecord; 
             await _noteRepository.Update(note, cancellationToken);
         }
-        public async Task DeleteNote(Note note, CancellationToken cancellationToken)
+        public async Task DeleteNote(Guid id, CancellationToken cancellationToken)
         {
-            ArgumentException.ThrowIfNullOrEmpty(nameof(note));
+            var note = await _noteRepository.GetById(id, cancellationToken);
             await _noteRepository.Delete(note, cancellationToken);
         }
     }

@@ -4,6 +4,6 @@ namespace TaskManager.Domain.Interfaces
 {
     public interface INoteRepository : IRepository<Note>
     {
-        Task<Note?> FindNoteById(Note note, CancellationToken cancellationToken); 
+        Task<Note?> FindNoteById(Guid id, CancellationToken cancellationToken); 
     }
 }
