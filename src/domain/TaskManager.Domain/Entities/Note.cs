@@ -11,7 +11,7 @@
             {
                 throw new ArgumentException($"Value can not be null or whitespace{nameof(record)}");
             }
-            _record = record ?? throw new ArgumentNullException(nameof(record));
+            _record = record;
         }
 
         public Guid Id
@@ -29,7 +29,7 @@
                 {
                     throw new ArgumentException($"Value can not be null or whitespace{nameof(_record)}");
                 }
-                _record = value ?? throw new ArgumentNullException(nameof(value));
+                _record = value;
             }
         }
 
