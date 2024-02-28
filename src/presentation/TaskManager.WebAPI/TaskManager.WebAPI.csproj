@@ -24,4 +24,9 @@
     <ProjectReference Include="..\..\infrastructure\TaskManager.DataEntityFramework\TaskManager.DataEntityFramework.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="HttpModels\Requests\" />
+    <Folder Include="HttpModels\Responses\" />
+  </ItemGroup>
+
 </Project>
