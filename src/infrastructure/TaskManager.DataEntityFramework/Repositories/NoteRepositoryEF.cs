@@ -8,13 +8,12 @@ namespace TaskManager.DataEntityFramework.Repositories
 {
     public class NoteRepositoryEF : EFRepository<Note>, INoteRepository
     {
-        private AppDbContext _dbContext;
-        public NoteRepositoryEF(AppDbContext _appDbContext)
-            : base(_appDbContext) { }
+        public NoteRepositoryEF(AppDbContext appDbContext)
+            : base(appDbContext) { }
 
         public async Task<Note?> FindNoteById(Guid id, CancellationToken cancellationToken) 
         {
-            return await _dbContext.Notes.SingleOrDefaultAsync(it => it.Id == id, cancellationToken);
+            return await Entities.SingleOrDefaultAsync(it => it.Id == id, cancellationToken);
         }
     }
 }
